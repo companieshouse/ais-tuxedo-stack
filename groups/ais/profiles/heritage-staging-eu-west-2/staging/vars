@@ -1,0 +1,9 @@
+aws_account = "heritage-staging"
+environment = "staging"
+
+ssh_master_public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCrBxG8MluFv/76fShQyepElIkqpkei9VNvuuBEcdCwaNgmqyqP0y+eTz5f+52x/wc0YjnC/KDamz96hXUlLHLIVun6EtTtB6oVpGMPuqnUfPHrumJxrFWn9lw18co2g4pY5ewDvDRq1FV6qLIEgc97SzFcfaJQGtAfmkO2rDIJFR+rtvlsnIXm60xfwqssAB8MLekqsKKLqX58o11qVocRDodl6cjWSQ5u7kToMecvMZjES4z3W1CtKaYaSggQBG+tMz3z2FPw7shCuCLd8nWL6OKaUaT4e6C0G/Sl9wekbi1X/oQerPS1k3j9K0xhud8aMI55XxE27cf+393RkNuPN3aFvMlmphFD1omdf+5c8OKm23uqtwLVwjaVkz/k1H2YuPG+aKDf37dLcS7qK69MBK9P7y4C+f9kIceugQFnMbJrP7xtDtf6ZGb36rexrmgl5a9WrKfn0Kj9Hgy59AbWcPEcUs7TV/oUbFC3lCIZnawpkGBqPP2xkBYKEuBmu4M= ais-tuxedo-master-staging"
+
+instance_count = 2
+instance_type = "m5.large"
+
+root_volume_size = 100
