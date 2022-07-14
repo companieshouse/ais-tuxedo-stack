@@ -1,0 +1,9 @@
+aws_account = "heritage-live"
+environment = "live"
+
+ssh_master_public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCqD85AsRH3wfIHDcMzfPSkPFj7aRkbOv7vcg/r6X0plism9VjyBgsAvzJkG6IP/qsG/8XRuNQK8KqW4GKkrmNgjHhAS9Af+mMi7osVKGOE2aPG7a6TJRO7Y5rvzP1U79g0Cps8fti0xQN4IM/kxPojnU+iT6U2svzPpmBVcJbJKOYjQIbujMu0/E/GhHrjPeSAJmpJ7z6u4GdoNAzceymuQtX4pHWT5/Gyz7mh85k+HSGEdTa4qmeQxmysLfNTvEwZS5ISg4sd8jlvLJf9WKn4zLA191h/ReTPMnLF2KyPUC1FBs7CP+hgLCPp5y/FLN9xXFVpLGaH+fwgWepyIWbtkwcYoZvYPEGJUsQrk1+Kqvwutzv4BbAOB48xcbA3MwhIo5FxJKLErpJk0szAFGtMOCwghVncSo32iwcWkj4qneoNvwAsB7xx675aEOT83EExF2oOXZci+G0aRgI81/PLHowPS0pzMURGeTL633Qru9UeA8jTDxZjHHxSVoS0sNU= ais-tuxedo-master-live"
+
+instance_count = 2
+instance_type = "m5.large"
+
+root_volume_size = 100
