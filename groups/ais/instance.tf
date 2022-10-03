@@ -102,11 +102,12 @@ resource "aws_instance" "ais" {
   user_data_base64       = data.cloudinit_config.config[count.index].rendered
   vpc_security_group_ids = [aws_security_group.common.id]
 
+  root_block_device {
+    volume_size = var.root_volume_size != 0 ? var.root_volume_size : local.ami_root_block_device.ebs.volume_size
+  }
+
   dynamic "ebs_block_device" {
-    for_each = [
-      for block_device in data.aws_ami.ais_tuxedo.block_device_mappings :
-        block_device if block_device.device_name != data.aws_ami.ais_tuxedo.root_device_name
-    ]
+    for_each = local.ami_lvm_block_devices
     iterator = block_device
     content {
       device_name = block_device.value.device_name
@@ -116,10 +117,6 @@ resource "aws_instance" "ais" {
       volume_size = var.lvm_block_devices[index(var.lvm_block_devices.*.lvm_physical_volume_device_node, block_device.value.device_name)].aws_volume_size_gb
       volume_type = block_device.value.ebs.volume_type
     }
-  }
-
-  root_block_device {
-    volume_size = var.root_volume_size
   }
 
   tags = merge(local.common_tags, {

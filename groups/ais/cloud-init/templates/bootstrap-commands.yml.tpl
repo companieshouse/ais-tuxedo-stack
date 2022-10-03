@@ -7,3 +7,4 @@ runcmd:
   - ${block_device.filesystem_resize_tool} ${block_device.lvm_logical_volume_device_node}
   %{ endif }
   %{~ endfor ~}
+  - xfs_growfs ${root_volume_device_node}

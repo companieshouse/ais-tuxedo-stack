@@ -6,4 +6,11 @@ ssh_master_public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCqD85AsRH3wfIHDcM
 instance_count = 2
 instance_type = "m5.large"
 
-root_volume_size = 100
+root_volume_size = 20
+
+lvm_block_devices = [{
+  aws_volume_size_gb: "100",
+  filesystem_resize_tool: "xfs_growfs",
+  lvm_logical_volume_device_node: "/dev/data/ais",
+  lvm_physical_volume_device_node: "/dev/xvdb"
+}]

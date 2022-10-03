@@ -72,7 +72,7 @@ variable "region" {
 
 variable "root_volume_size" {
   type        = number
-  description = "The size of the root volume in gibibytes (GiB)"
+  description = "The size of the root volume in GiB; set this value to 0 to preserve the size specified in the AMI metadata. This value should not be smaller than the size specified in the AMI metadata and used by the root volume snapshot. The filesystem will be expanded automatically to use all available space for the volume and an XFS filesystem is assumed"
   default     = 20
 }
 
