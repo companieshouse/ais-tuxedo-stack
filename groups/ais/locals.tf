@@ -37,4 +37,10 @@ locals {
   ]...)
 
   logs_kms_key_id = data.vault_generic_secret.kms_keys.data["logs"]
+
+  ami_root_block_device = tolist(data.aws_ami.ais_tuxedo.block_device_mappings)[index(data.aws_ami.ais_tuxedo.block_device_mappings.*.device_name, data.aws_ami.ais_tuxedo.root_device_name)]
+  ami_lvm_block_devices = [
+    for block_device in data.aws_ami.ais_tuxedo.block_device_mappings :
+      block_device if block_device.device_name != data.aws_ami.ais_tuxedo.root_device_name
+  ]
 }

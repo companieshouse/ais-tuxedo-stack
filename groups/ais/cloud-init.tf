@@ -14,6 +14,7 @@ data "cloudinit_config" "config" {
     content = templatefile("${path.module}/cloud-init/templates/bootstrap-commands.yml.tpl", {
       instance_hostname = "${var.service_subtype}-${var.service}-${var.environment}-${count.index + 1}"
       lvm_block_devices = var.lvm_block_devices
+      root_volume_device_node = data.aws_ami.ais_tuxedo.root_device_name
     })
   }
 }
