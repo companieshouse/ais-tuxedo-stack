@@ -1,0 +1,6 @@
+---
+
+role_lock_file_prefix: /etc/ais-tuxedo-stack-database-provisioned
+
+informix_chunk_store_path: /image/data/informix/chunks
+informix_tape_device_path: /db_dump

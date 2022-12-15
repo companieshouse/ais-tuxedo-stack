@@ -1,0 +1,127 @@
+---
+
+- name:  "{{ informix_server_name }} : Check for presence of role lock file"
+  stat:
+    path: "{{ role_lock_file_prefix }}-{{ informix_server_name }}"
+  register: lock_result
+
+- fail:
+    msg: "The user '{{ informix_server_name }}' was previously provisioned by this role. There is a risk of data loss if this role is executed against a remote that contains existing dbspaces and chunks. Refer to the README.md file for this role for more information."
+  when: lock_result.stat.exists
+
+- name: "{{ informix_server_name }} : Check Informix configuration is present"
+  assert:
+    that:
+      - informix_server_name in informix_service_config.keys()
+    msg: "Informix configuration for Tuxedo user '{{ informix_server_name }}' must be defined in 'informix_service_config'"
+
+- name: "{{ informix_server_name }} : Check Informix root dbspace configuration is present"
+  assert:
+    that:
+      - informix_service_config[informix_server_name].dbspaces.root is defined
+      - informix_service_config[informix_server_name].dbspaces.root.initial_chunk is defined
+    msg: "Informix root dbspace configuration for Tuxedo user {{ informix_server_name }} must include an 'initial_chunk' configuration in 'informix_service_config[{{ informix_server_name }}].dbspaces.root'"
+
+- name: "{{ informix_server_name }} : Set variables for config population"
+  set_fact:
+    informix_server_aliases: "{{ informix_service_config[informix_server_name].server_aliases }}"
+    informix_server_name: "{{ informix_server_name }}"
+    informix_server_id: "{{ informix_service_config[informix_server_name].server_id }}"
+    informix_server_port: "{{ informix_service_config[informix_server_name].server_port }}"
+    informix_root_dbspace_name: "root"
+    informix_root_dbspace_path: "{{ informix_service_config[informix_server_name].dbspaces.root.initial_chunk.path }}"
+    informix_root_dbspace_offset: "{{ informix_service_config[informix_server_name].dbspaces.root.initial_chunk.offset_in_kb }}"
+    informix_root_dbspace_size: "{{ informix_service_config[informix_server_name].dbspaces.root.initial_chunk.size_in_kb }}"
+
+- name: "{{ informix_server_name }} : Use default server connections for config population"
+  set_fact:
+    informix_connections:
+      - server_name: "{{ informix_server_name }}"
+        connection_type: onipcshm
+        host: localhost
+        service_or_port: localhost
+      - server_name: "{{ informix_server_name }}tcp"
+        connection_type: onsoctcp
+        host: localhost4
+        service_or_port: "{{ informix_server_port }}"
+  when: informix_service_config[informix_server_name].server_connections is not defined
+
+- name: "{{ informix_server_name }} : Use specified server connections for config population"
+  set_fact:
+    informix_connections: "{{ informix_service_config[informix_server_name].server_connections }}"
+  when: informix_service_config[informix_server_name].server_connections is defined
+
+- name: "{{ informix_server_name }} : Create Informix server logs directory"
+  file:
+    path: "{{ informix_logs_path }}/{{ informix_server_name }}"
+    owner: "{{ informix_service_user }}"
+    group: "{{ informix_service_group }}"
+    mode: 0755
+    state: directory
+
+- name: "{{ informix_server_name }} : Create Informix environment file"
+  template:
+    src: informix.env.j2
+    dest: "{{ informix_install_path }}/etc/informix.env.{{ informix_server_name }}"
+    owner: "{{ informix_service_user }}"
+    group: "{{ informix_service_group }}"
+    mode: '0744'
+
+- name: Set environment file path
+  set_fact:
+    informix_env_file_path: "{{ informix_install_path }}/etc/informix.env.{{ informix_server_name }}"
+
+- name: "{{ informix_server_name }} : Create Informix runtime configuration file"
+  template:
+    src: onconfig.j2
+    dest: "{{ informix_install_path }}/etc/onconfig.{{ informix_server_name }}"
+    owner: "{{ informix_service_user }}"
+    group: "{{ informix_service_group }}"
+    mode: '0744'
+    trim_blocks: no
+  vars:
+    connections: "{{ informix_connections }}"
+
+- name: "{{ informix_server_name }} : Create Informix client/server connectivity configuration file"
+  template:
+    src: sqlhosts.j2
+    dest: "{{ informix_install_path }}/etc/sqlhosts.{{ informix_server_name }}"
+    owner: "{{ informix_service_user }}"
+    group: "{{ informix_service_group }}"
+    mode: '0744'
+  vars:
+    connections: "{{ informix_connections }}"
+
+- name: "{{ informix_server_name }} : Create chunk store directory"
+  file:
+    path: "{{ informix_chunk_store_path }}/{{ informix_server_name }}"
+    owner: informix
+    group: informix
+    mode: 0755
+    state: directory
+
+- name: "{{ informix_server_name }} : Ensure user is a member of the informix group"
+  user:
+    name: "{{ informix_server_name }}"
+    groups: "{{ informix_service_group }}"
+    append: yes
+
+- name: "{{ informix_server_name }} : Provision root dbspace"
+  include_tasks: root_dbspace.yml
+  loop: "{{ informix_service_config[informix_server_name].dbspaces | dict2items | rejectattr('key', 'ne', 'root') | list }}"
+  loop_control:
+    loop_var: dbspace
+
+- name: "{{ informix_server_name }} : Provision additional dbspaces"
+  include_tasks: dbspace.yml
+  loop: "{{ informix_service_config[informix_server_name].dbspaces | dict2items | rejectattr('key', 'eq', 'root') | list }}"
+  loop_control:
+    loop_var: dbspace
+
+- name: Create role lock file
+  copy:
+    content: "{{ ansible_date_time.iso8601 }} Provisioned by 'database' role in 'ais-tuxedo-stack' project\n"
+    dest: "{{ role_lock_file_prefix }}-{{ informix_server_name }}"
+    owner: root
+    group: root
+    mode: 0444

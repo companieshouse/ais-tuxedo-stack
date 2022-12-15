@@ -1,0 +1,67 @@
+---
+
+informix_server_name_suffix: _primary
+
+# Staging environment
+#
+# Server port mappings:
+#   - ais 6000 (primary/secondary)
+#
+# Server ID mappings:
+#   - ais 0 (primary/secondary)
+
+informix_service_config:
+  ais:
+    server_aliases: "image_win"
+    server_id: "{{ informix_server_id_start + (0 * informix_server_id_increment) | int }}"
+    server_port: "{{ informix_server_port_start + (0 * informix_server_port_increment) | int }}"
+    dbspaces:
+      root:
+        initial_chunk:
+          path: "{{ informix_chunk_store_path }}/ais/ais_root_dbs_1"
+          offset_in_kb: 0
+          size_in_kb: 2000000
+      import_data_dbs:
+        initial_chunk:
+          path: "{{ informix_chunk_store_path }}/ais/import_data_dbs_1"
+          offset_in_kb: 0
+          size_in_kb: 2097152
+        additional_chunks:
+          - path: "{{ informix_chunk_store_path }}/ais/import_data_dbs_2"
+            offset_in_kb: 0
+            size_in_kb: 2097152
+          - path: "{{ informix_chunk_store_path }}/ais/import_data_dbs_3"
+            offset_in_kb: 0
+            size_in_kb: 2097152
+      image_data_dbs:
+        initial_chunk:
+          path: "{{ informix_chunk_store_path }}/ais/image_data_dbs_1"
+          offset_in_kb: 0
+          size_in_kb: 2097152
+        additional_chunks:
+          - path: "{{ informix_chunk_store_path }}/ais/image_data_dbs_2"
+            offset_in_kb: 0
+            size_in_kb: 2097152
+          - path: "{{ informix_chunk_store_path }}/ais/image_data_dbs_3"
+            offset_in_kb: 0
+            size_in_kb: 2097152
+      ais_log_dbs:
+        initial_chunk:
+          path: "{{ informix_chunk_store_path }}/ais/ais_log_dbs_1"
+          offset_in_kb: 0
+          size_in_kb: 1048576
+    server_connections:
+        - server_name: ais_primary
+          connection_type: onsoctcp
+          host: instance-1.ais.tuxedo.staging.heritage.aws.internal
+          service_or_port: "{{ informix_server_port_start + (0 * informix_server_port_increment) | int }}"
+        - server_name: ais_secondary
+          connection_type: onsoctcp
+          host: instance-2.ais.tuxedo.staging.heritage.aws.internal
+          service_or_port: "{{ informix_server_port_start + (0 * informix_server_port_increment) | int }}"
+        - server_name: image_win
+          connection_type: onsoctcp
+          host: instance-1.ais.tuxedo.staging.heritage.aws.internal
+          service_or_port: 6278
+
+

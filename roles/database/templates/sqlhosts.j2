@@ -1,0 +1,4 @@
+#dbservername    nettype       hostname      servicename      options
+{% for connection in connections %}
+{{'%-17s'|format(connection.server_name)}}{{'%-14s'|format(connection.connection_type)}}{{ connection.host }} {{connection.service_or_port}} {{connection.options|default('')}}
+{% endfor %}

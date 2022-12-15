@@ -1,0 +1,21 @@
+---
+
+- name: "{{ informix_server_name }} : {{ dbspace.key }} : Check state of chunk"
+  stat:
+    path: chunk.path
+  register: chunk_result
+
+- name: "{{ informix_server_name }} : {{ dbspace.key }} : Create cooked disk dbspace chunk"
+  file:
+    path: "{{ chunk.path }}"
+    owner: informix
+    group: informix
+    mode: 0660
+    state: touch
+  when: chunk_result.stat.isblk is not defined
+
+- name: "{{ informix_server_name }} : {{ dbspace.key }} :  Add chunk to dbspace"
+  become_user: "{{ informix_server_name }}"
+  shell: "source {{ informix_env_file_path }} && onspaces -a {{ dbspace.key }} -p {{ chunk.path }} -o {{ chunk.offset_in_kb }} -s {{ chunk.size_in_kb }}"
+  args:
+    executable: /bin/bash

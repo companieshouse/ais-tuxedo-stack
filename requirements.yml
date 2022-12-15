@@ -1,0 +1,17 @@
+---
+
+roles:
+  - src: https://github.com/companieshouse/ansible-role-aws-cli
+    name: aws-cli
+    version: "1.0.0"
+  - src: https://github.com/companieshouse/ansible-role-ssh-key
+    name: ssh-key
+    version: "1.0.0"
+
+collections:
+  - name: amazon.aws
+    version: "4.2.0"
+  - name: community.general
+    version: "4.8.0"
+  - name: community.hashi_vault
+    version: "3.3.1"

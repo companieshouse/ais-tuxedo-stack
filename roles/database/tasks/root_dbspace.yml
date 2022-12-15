@@ -1,0 +1,43 @@
+---
+
+- name: "{{ informix_server_name }} : {{ dbspace.key }} : Check initial chunk configuration for root dbspace is present"
+  assert:
+    that:
+      - dbspace.value.initial_chunk is defined
+    msg: "Configuration for dbspace '{{ dbspace.key }}' must include 'initial_chunk' configuration"
+
+- name: "{{ informix_server_name }} : {{ dbspace.key }} : Check state of root dbspace initial chunk"
+  stat:
+    path: chunk.path
+  register: root_chunk_result
+
+- name: "{{ informix_server_name }} : {{ dbspace.key }} : Create root dbspace initial chunk"
+  file:
+    path: "{{ dbspace.value.initial_chunk.path }}"
+    owner: informix
+    group: informix
+    mode: 0660
+    state: touch
+  when: root_chunk_result.stat.isblk is not defined
+
+- name: "{{ informix_server_name }} : {{ dbspace.key }} : Enable disk initialisation for dbspace provisioning"
+  lineinfile:
+    path: "{{ informix_install_path }}/etc/onconfig.{{ informix_server_name }}"
+    state: present
+    regexp: '^(FULL_DISK_INIT).*'
+    line: '\1 1'
+    backrefs: yes
+
+- name: "{{ informix_server_name }} : {{ dbspace.key }} : Initialise root dbspace disks"
+  become_user: "{{ informix_server_name }}"
+  shell: "source {{ informix_env_file_path }} && oninit -i -y"
+  args:
+    executable: /bin/bash
+
+# Provision additional dbspace chunks
+- name: "{{ informix_server_name }} : {{ dbspace.key }} : Provision additional root dbspace chunks"
+  include_tasks: chunk.yml
+  loop: "{{ dbspace.value.additional_chunks }}"
+  loop_control:
+    loop_var: chunk
+  when: dbspace.value.additional_chunks is defined and dbspace.value.additional_chunks | length > 0
