@@ -1,0 +1,5 @@
+---
+
+role_lock_file_path: /etc/ais-tuxedo-stack-iscsi-devices-provisioned
+
+vault_path: "{{ vault_base_path }}/iscsi"

@@ -1,0 +1,15 @@
+---
+
+- name: Create multipath daemon configuration
+  template:
+    src: multipath.conf.j2
+    dest: /etc/multipath.conf
+    owner: root
+    group: root
+    mode: 0600
+    trim_blocks: no
+  notify:
+    - Restart multipath daemon
+
+- name: Flush handlers
+  meta: flush_handlers
