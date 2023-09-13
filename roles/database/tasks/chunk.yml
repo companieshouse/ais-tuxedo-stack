@@ -1,18 +1,22 @@
 ---
 
+- name: "{{ informix_server_name }} : {{ dbspace.key }} : Resolve path of chunk"
+  command: "realpath {{ chunk.path }}"
+  register: chunk_path
+
 - name: "{{ informix_server_name }} : {{ dbspace.key }} : Check state of chunk"
   stat:
-    path: chunk.path
-  register: chunk_result
+    path: "{{ chunk_path.stdout }}"
+  register: chunk_state
 
-- name: "{{ informix_server_name }} : {{ dbspace.key }} : Create cooked disk dbspace chunk"
+- name: "{{ informix_server_name }} : {{ dbspace.key }} : Create cooked file dbspace chunk"
   file:
     path: "{{ chunk.path }}"
     owner: informix
     group: informix
     mode: 0660
     state: touch
-  when: chunk_result.stat.isblk is not defined
+  when: chunk_state.stat.ischr is not defined or chunk_state.stat.ischr == False
 
 - name: "{{ informix_server_name }} : {{ dbspace.key }} :  Add chunk to dbspace"
   become_user: "{{ informix_server_name }}"

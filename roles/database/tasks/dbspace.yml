@@ -6,10 +6,15 @@
       - dbspace.value.initial_chunk is defined
     msg: "Configuration for dbspace '{{ dbspace.key }}' must include 'initial_chunk' configuration"
 
+
+- name: "{{ informix_server_name }} : {{ dbspace.key }} : Resolve path of initial dbspace chunk"
+  command: "realpath {{ dbspace.value.initial_chunk.path }}"
+  register: initial_chunk_path
+
 - name: "{{ informix_server_name }} : {{ dbspace.key }} : Check state of initial dbspace chunk"
   stat:
-    path: chunk.path
-  register: initial_chunk_result
+    path: "{{ initial_chunk_path.stdout }}"
+  register: initial_chunk_state
 
 - name: "{{ informix_server_name }} : {{ dbspace.key }} : Create cooked disk initial dbspace chunk"
   file:
@@ -18,7 +23,7 @@
     group: informix
     mode: 0660
     state: touch
-  when: initial_chunk_result.stat.isblk is not defined
+  when: initial_chunk_state.stat.ischr is not defined or initial_chunk_state.stat.ischr == False
 
 - name: "{{ informix_server_name }} : {{ dbspace.key }} :  Create dbspace and initial chunk"
   become_user: "{{ informix_server_name }}"
