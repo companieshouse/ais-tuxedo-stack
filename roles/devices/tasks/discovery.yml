@@ -1,0 +1,17 @@
+---
+
+- name: Create iSCSI initiator name configuration
+  template:
+    src: initiatorname.iscsi.j2
+    dest: /etc/iscsi/initiatorname.iscsi
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Discover iSCSI targets
+  command:
+    cmd: "{{ item }}"
+  loop:
+    - iscsiadm --mode discovery --op update --type sendtargets --portal {{ iscsi_vault_config[ansible_hostname]['iscsi_portal_ips'][0] }}
+    - iscsiadm --mode node -l all
+    - iscsiadm -m session --rescan

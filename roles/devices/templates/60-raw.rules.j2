@@ -1,0 +1,4 @@
+{% for device in devices %}
+ENV{DM_UUID}=="mpath-{{ iscsi_vault_config[ansible_hostname]['iscsi_device_wwids'][device.alias] }}", RUN+="/bin/raw {{ device.raw_character_device_path }} /dev/mapper/{{ device.alias }}"
+KERNEL=="{{ device.raw_character_device_path | basename }}", ACTION=="add", OWNER="informix", GROUP="informix", MODE="0660", SYMLINK+="{{ device.alias }}"
+{% endfor %}
