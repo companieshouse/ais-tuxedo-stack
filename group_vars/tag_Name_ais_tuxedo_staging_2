@@ -18,38 +18,38 @@ informix_service_config:
     dbspaces:
       root:
         initial_chunk:
-          path: "{{ informix_chunk_store_path }}/ais/ais_root_dbs_1"
+          path: "/dev/ais"
           offset_in_kb: 0
-          size_in_kb: 2000000
+          size_in_kb: 10000000
       import_data_dbs:
         initial_chunk:
-          path: "{{ informix_chunk_store_path }}/ais/import_data_dbs_1"
-          offset_in_kb: 0
-          size_in_kb: 2097152
+          path: "/dev/ais"
+          offset_in_kb: 10000000
+          size_in_kb: 8000000
         additional_chunks:
-          - path: "{{ informix_chunk_store_path }}/ais/import_data_dbs_2"
-            offset_in_kb: 0
-            size_in_kb: 2097152
-          - path: "{{ informix_chunk_store_path }}/ais/import_data_dbs_3"
-            offset_in_kb: 0
-            size_in_kb: 2097152
+          - path: "/dev/ais"
+            offset_in_kb: 18000000
+            size_in_kb: 8000000
       image_data_dbs:
         initial_chunk:
-          path: "{{ informix_chunk_store_path }}/ais/image_data_dbs_1"
-          offset_in_kb: 0
-          size_in_kb: 2097152
+          path: "/dev/ais"
+          offset_in_kb: 26000000
+          size_in_kb: 32000000
         additional_chunks:
-          - path: "{{ informix_chunk_store_path }}/ais/image_data_dbs_2"
-            offset_in_kb: 0
-            size_in_kb: 2097152
-          - path: "{{ informix_chunk_store_path }}/ais/image_data_dbs_3"
-            offset_in_kb: 0
-            size_in_kb: 2097152
+          - path: "/dev/ais"
+            offset_in_kb: 58000000
+            size_in_kb: 32000000
+          - path: "/dev/ais"
+            offset_in_kb: 90000000
+            size_in_kb: 32000000
+          - path: "/dev/ais"
+            offset_in_kb: 122000000
+            size_in_kb: 32000000
       ais_log_dbs:
         initial_chunk:
-          path: "{{ informix_chunk_store_path }}/ais/ais_log_dbs_1"
-          offset_in_kb: 0
-          size_in_kb: 1048576
+          path: "/dev/ais"
+          offset_in_kb: 154000000
+          size_in_kb: 1000000
     server_connections:
         - server_name: ais_primary
           connection_type: onsoctcp
