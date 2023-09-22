@@ -4,3 +4,11 @@ informix_server_id_increment: 1
 informix_server_id_start: 0
 informix_server_port_increment: 1000
 informix_server_port_start: 6000
+
+iscsi_devices:
+  - alias: db_dump
+    filesystem:
+      type: xfs
+      mount_path: /db_dump
+  - alias: ais
+    raw_character_device_path: /dev/raw/raw1
