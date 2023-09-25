@@ -1,0 +1,25 @@
+---
+
+- name: Install NFS tools
+  yum:
+    name: nfs-utils
+    state: latest
+
+- name: Mount NFS shares
+  mount:
+    fstype: "nfs"
+    opts: "{{ item.opts | default('hard,bg') }}"
+    src: "{{ item.src }}"
+    path: "{{ item.path }}"
+    state: mounted
+  with_items: "{{ nfsmounts }}"
+
+- name: Create mount point symlinks
+  file:
+    src: "{{ item.path }}"
+    dest: "{{ item.symlink }}"
+    owner: root
+    group: root
+    state: link
+  with_items: "{{ nfsmounts }}"
+  when: item.symlink is defined and item.symlink | trim | length > 0
