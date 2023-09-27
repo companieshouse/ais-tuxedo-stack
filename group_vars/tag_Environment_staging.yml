@@ -12,3 +12,7 @@ iscsi_devices:
       mount_path: /db_dump
   - alias: ais
     raw_character_device_path: /dev/raw/raw1
+
+nfsmounts:
+  - path: "/DBshare"
+    src: "192.168.255.20:/DBshare"
