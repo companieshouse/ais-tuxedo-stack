@@ -12,7 +12,7 @@
     src: "{{ item.src }}"
     path: "{{ item.path }}"
     state: mounted
-  with_items: "{{ nfsmounts }}"
+  with_items: "{{ nfsmounts | default([]) }}"
 
 - name: Create mount point symlinks
   file:
@@ -21,5 +21,5 @@
     owner: root
     group: root
     state: link
-  with_items: "{{ nfsmounts }}"
+  with_items: "{{ nfsmounts | default([]) }}"
   when: item.symlink is defined and item.symlink | trim | length > 0
