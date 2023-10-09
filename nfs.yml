@@ -8,7 +8,7 @@
     ssh_key_name: ansible_remote
     hashicorp_vault_private_key_path: "/applications/heritage-{{ environment_name }}-eu-west-2/ais-tuxedo/aws"
 
-# Provision Informix dbspaces and chunks
+# Provision NFS mounts
 - hosts: aws_ec2
   serial: 1
   remote_user: centos
