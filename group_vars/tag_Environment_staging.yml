@@ -16,3 +16,6 @@ iscsi_devices:
 nfsmounts:
   - path: "/DBshare"
     src: "192.168.255.20:/DBshare"
+  - path: "/mnt/nfs/tuxedo"
+    src: "192.168.255.19:/AIS_Tuxedo"
+    opts: "defaults"
