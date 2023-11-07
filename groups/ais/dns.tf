@@ -1,6 +1,6 @@
 data "aws_route53_zone" "ais" {
-  name     = local.dns_zone
-  vpc_id   = data.aws_vpc.heritage.id
+  name   = local.dns_zone
+  vpc_id = data.aws_vpc.heritage.id
 }
 
 resource "aws_route53_record" "instance" {

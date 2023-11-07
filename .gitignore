@@ -1,0 +1,6 @@
+# macOS metadata files
+.DS_Store
+._*
+
+# Terraform metadata
+**/.terraform
