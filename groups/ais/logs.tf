@@ -7,8 +7,8 @@ resource "aws_cloudwatch_log_group" "tuxedo" {
 
   tags = merge(local.common_tags, {
     TuxedoServerType = each.value.tuxedo_service
-    TuxedoLogName = each.value.log_name
-    TuxedoLogType = each.value.log_type
+    TuxedoLogName    = each.value.log_name
+    TuxedoLogType    = each.value.log_type
   })
 }
 
