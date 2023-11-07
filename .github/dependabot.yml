@@ -6,3 +6,11 @@ updates:
       interval: "weekly"
     reviewers:
       - "companieshouse/platform-admin"
+    registries:
+      - github-dependabot
+registries:
+  github-dependabot:
+    type: git
+    url: https://github.com
+    username: x-access-token
+    password: ${{secrets.DEPENDABOT_GITHUB_ACCESS_TOKEN}}
