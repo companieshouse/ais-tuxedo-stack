@@ -64,4 +64,32 @@ informix_service_config:
           host: instance-1.ais.tuxedo.staging.heritage.aws.internal
           service_or_port: 6278
 
-
+informix_maintenance_jobs:
+  - name: Stop all logical log continuous backup processes
+    day_of_week: "*"
+    day_of_month: "*"
+    minute: "05"
+    hour: "00"
+    month: "*"
+    script: "stop_all_logicals"
+  - name: Informix AIS database logical log archive
+    day_of_week: "*"
+    day_of_month: "*"
+    minute: "10"
+    hour: "00"
+    month: "*"
+    script: "logical_log_archive ais"
+  - name: Informix AIS database level zero backup
+    day_of_week: "*"
+    day_of_month: "*"
+    minute: "20"
+    hour: "00"
+    month: "*"
+    script: "level_zero_backup ais"
+  - name: Informix AIS database statistics update
+    day_of_week: "*"
+    day_of_month: "*"
+    minute: "30"
+    hour: "00"
+    month: "*"
+    script: "update_statistics ais"
