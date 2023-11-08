@@ -1,2 +1,101 @@
 ---
 
+---
+
+informix_server_name_suffix: _secondary
+
+# Live environment
+#
+# Server port mappings:
+#   - ais 6000 (primary/secondary)
+#
+# Server ID mappings:
+#   - ais 0 (primary/secondary)
+
+informix_service_config:
+  ais:
+    server_aliases: "image_win"
+    server_id: "{{ informix_server_id_start + (0 * informix_server_id_increment) | int }}"
+    server_port: "{{ informix_server_port_start + (0 * informix_server_port_increment) | int }}"
+    dbspaces:
+      root:
+        initial_chunk:
+          path: "/dev/ais"
+          offset_in_kb: 0
+          size_in_kb: 10000000
+      import_data_dbs:
+        initial_chunk:
+          path: "/dev/ais"
+          offset_in_kb: 10000000
+          size_in_kb: 8000000
+        additional_chunks:
+          - path: "/dev/ais"
+            offset_in_kb: 18000000
+            size_in_kb: 8000000
+      image_data_dbs:
+        initial_chunk:
+          path: "/dev/ais"
+          offset_in_kb: 26000000
+          size_in_kb: 32000000
+        additional_chunks:
+          - path: "/dev/ais"
+            offset_in_kb: 58000000
+            size_in_kb: 32000000
+          - path: "/dev/ais"
+            offset_in_kb: 90000000
+            size_in_kb: 32000000
+          - path: "/dev/ais"
+            offset_in_kb: 122000000
+            size_in_kb: 32000000
+      ais_log_dbs:
+        initial_chunk:
+          path: "/dev/ais"
+          offset_in_kb: 154000000
+          size_in_kb: 1000000
+    server_connections:
+        - server_name: ais_primary
+          connection_type: onsoctcp
+          host: instance-1.ais.tuxedo.live.heritage.aws.internal
+          service_or_port: "{{ informix_server_port_start + (0 * informix_server_port_increment) | int }}"
+        - server_name: ais_secondary
+          connection_type: onsoctcp
+          host: instance-2.ais.tuxedo.live.heritage.aws.internal
+          service_or_port: "{{ informix_server_port_start + (0 * informix_server_port_increment) | int }}"
+        - server_name: image_win
+          connection_type: onsoctcp
+          host: instance-2.ais.tuxedo.live.heritage.aws.internal
+          service_or_port: 6278
+
+informix_maintenance_jobs:
+  - name: Stop all logical log continuous backup processes
+    day_of_week: "*"
+    day_of_month: "*"
+    minute: "05"
+    hour: "00"
+    month: "*"
+    script: "stop_all_logicals"
+    disabled: true
+  - name: Informix AIS database logical log archive
+    day_of_week: "*"
+    day_of_month: "*"
+    minute: "10"
+    hour: "00"
+    month: "*"
+    script: "logical_log_archive ais"
+    disabled: true
+  - name: Informix AIS database level zero backup
+    day_of_week: "*"
+    day_of_month: "*"
+    minute: "20"
+    hour: "00"
+    month: "*"
+    script: "level_zero_backup ais"
+    disabled: true
+  - name: Informix AIS database statistics update
+    day_of_week: "*"
+    day_of_month: "*"
+    minute: "30"
+    hour: "00"
+    month: "*"
+    script: "update_statistics ais"
+    disabled: true
