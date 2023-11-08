@@ -16,35 +16,17 @@ iscsi_devices:
 nfsmounts:
   - path: "/DBshare"
     src: "192.168.255.20:/DBshare"
-  - path: "/mnt/nfs/tuxedo"
-    src: "192.168.255.19:/AIS_Tuxedo"
-    opts: "defaults"
-  - path: "/mnt/nfs/chi-sca-pl2/data1/image/masterDocs"
-    src: "172.24.4.18:/data1/image/masterDocs"
-    opts: ro,hard,bg
-  - path: "/mnt/nfs/chi-sca-pl2/data1/image/masterDocs"
-    src: "172.24.4.18:/data1/image/masterDocs"
-    opts: ro,hard,bg
   - path: "/mnt/nfs/chi-sca-pl2/data1/image/masterDocs"
     src: "172.24.4.18:/data1/image/masterDocs"
     opts: ro,hard,bg
   - path: "/mnt/nfs/chi-sca-pl2/data1/image/slaveDocs"
     src: "172.24.4.18:/data1/image/slaveDocs"
     opts: ro,hard,bg
-  - path: "/mnt/nfs/chi-sca-pl2/data1/image/imb250Docs"
-    src: "172.24.4.18:/data1/image/imb250Docs"
-    opts: ro,hard,bg
   - path: "/mnt/nfs/chi-sca-pl2/data1/image/ibm250Docs"
     src: "172.24.4.18:/data1/image/ibm250Docs"
     opts: ro,hard,bg
   - path: "/mnt/nfs/chi-sca-pl2/data1/image/edinbDocs"
     src: "172.24.4.18:/data1/image/edinbDocs"
-    opts: ro,hard,bg
-  - path: "/mnt/nfs/chi-sca-pl2/data1/image/ebelfastDocs"
-    src: "172.24.4.18:/data1/image/ebelfastDocs"
-    opts: ro,hard,bg
-  - path: "/mnt/nfs/chi-sca-pl2/data1/image/ebelfastDocs"
-    src: "172.24.4.18:/data1/image/ebelfastDocs"
     opts: ro,hard,bg
   - path: "/mnt/nfs/chi-sca-pl2/data1/image/belfastDocs"
     src: "172.24.4.18:/data1/image/belfastDocs"
