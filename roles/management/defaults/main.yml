@@ -1,0 +1,10 @@
+---
+
+alerts:
+  enabled: no
+
+stats:
+  enabled: no
+
+informix_user: informix
+informix_group: informix

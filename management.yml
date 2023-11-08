@@ -1,0 +1,17 @@
+---
+
+# Provision Ansible controller with SSH key for remote
+- hosts: localhost
+  roles:
+    - ssh-key
+  vars:
+    ssh_key_name: ansible_remote
+    hashicorp_vault_private_key_path: "/applications/heritage-{{ environment_name }}-eu-west-2/ais-tuxedo/aws"
+
+# Provision Informix management scripts and cron jobs
+- hosts: aws_ec2
+  serial: 1
+  remote_user: centos
+  become: yes
+  roles:
+    - management
