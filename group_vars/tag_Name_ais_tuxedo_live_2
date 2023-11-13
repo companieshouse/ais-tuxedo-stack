@@ -1,7 +1,5 @@
 ---
 
----
-
 informix_server_name_suffix: _secondary
 
 # Live environment
