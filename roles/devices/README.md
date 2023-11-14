@@ -25,7 +25,7 @@ The `iscsi_devices` variable is defined as a list of dictionaries, each of which
 | Name                        | Default | Description                                                                           |
 |-----------------------------|---------|---------------------------------------------------------------------------------------|
 | `alias`                     |         | A unique alias for the storage device. This is used to create a symbolic link of the same name in `/dev` pointing at the raw character device node, and is used to give the path context when referenced in Informix configuration (e.g. a symbolic link `/dev/scud` carries more context than the character device node it points at, such as `/dev/raw/raw1`). |
-| `raw_character_device_path` |         | A unique raw character device node path. This should take the form `/dev/raw/raw<N>` where `<N>` is a non-negative integral value (e.g. `/dev/raw/raw1`, `/dev/raw/raw2` and so on). See [raw(8)](https://www.man7.org/linux/man-pages/man8/raw.8.html) for more information. |
+| `raw_character_device_path` |         | A unique raw character device node path. This should take the form `/dev/raw/raw<N>` where `<N>` is a non-negative integer value (e.g. `/dev/raw/raw1`, `/dev/raw/raw2` and so on). See [raw(8)](https://www.man7.org/linux/man-pages/man8/raw.8.html) for more information. |
 | `filesystem`                |         | _Optional_. A dictionary specifying filesystem configuration. See [Filesystem Configuration][2] for more information. |
 
 ---
