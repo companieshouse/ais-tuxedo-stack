@@ -14,23 +14,27 @@ iscsi_devices:
     raw_character_device_path: /dev/raw/raw1
 
 nfsmounts:
-  - path: "/DBshare"
-    src: "192.168.255.20:/DBshare"
-  - path: "/mnt/nfs/chi-sca-pl2/data1/image/masterDocs"
-    src: "172.24.4.18:/data1/image/masterDocs"
+  - path: /DBshare
+    src: 192.168.255.20:/DBshare
+  - path: /mnt/nfs/chi-sca-pl2/data1/image/masterDocs
+    src: 172.24.4.18:/data1/image/masterDocs
     opts: ro,hard,bg
-  - path: "/mnt/nfs/chi-sca-pl2/data1/image/slaveDocs"
-    src: "172.24.4.18:/data1/image/slaveDocs"
+  - path: /mnt/nfs/chi-sca-pl2/data1/image/slaveDocs
+    src: 172.24.4.18:/data1/image/slaveDocs
     opts: ro,hard,bg
-  - path: "/mnt/nfs/chi-sca-pl2/data1/image/ibm250Docs"
-    src: "172.24.4.18:/data1/image/ibm250Docs"
+  - path: /mnt/nfs/chi-sca-pl2/data1/image/ibm250Docs
+    src: 172.24.4.18:/data1/image/ibm250Docs
     opts: ro,hard,bg
-  - path: "/mnt/nfs/chi-sca-pl2/data1/image/edinbDocs"
-    src: "172.24.4.18:/data1/image/edinbDocs"
+  - path: /mnt/nfs/chi-sca-pl2/data1/image/edinbDocs
+    src: 172.24.4.18:/data1/image/edinbDocs
     opts: ro,hard,bg
-  - path: "/mnt/nfs/chi-sca-pl2/data1/image/belfastDocs"
-    src: "172.24.4.18:/data1/image/belfastDocs"
+  - path: /mnt/nfs/chi-sca-pl2/data1/image/belfastDocs
+    src: 172.24.4.18:/data1/image/belfastDocs
     opts: ro,hard,bg
-  - path: "/mnt/nfs/chi-sca-pl2/data1/apps/scripts/system/trig1"
-    src: "172.24.4.18:/data1/apps/scripts/system/trig1"
+  - path: /mnt/nfs/chi-sca-pl2/data1/apps/scripts/system/trig1
+    src: 172.24.4.18:/data1/apps/scripts/system/trig1
     opts: ro,hard,bg
+  - path: /image/ais/Email/chd3test
+    src: 192.168.255.19:/chd_image
+  - path: /image/ais/Online/chd3test
+    src: 192.168.255.19:/chd_online
