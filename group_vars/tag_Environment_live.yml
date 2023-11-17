@@ -108,3 +108,17 @@ nfsmounts:
     src: 192.168.255.35:/image2/cache_space39
   - path: /image/ais/cache/cache_space40
     src: 192.168.255.35:/image2/cache_space40
+  - path: /image/ais/Email/CEU
+    src: 192.168.255.35:/chcc_email
+  - path: /image/ais/Print/CEU
+    src: 192.168.255.35:/chcc_post
+  - path: /image/ais/Online/CEU
+    src: 192.168.255.35:/chcc_online
+  - path: /image/ais/Email/chd3live
+    src: 192.168.255.35:/chd_image
+  - path: /image/ais/Online/chd3live
+    src: 192.168.255.35:/chd_online
+  - path: /image/ais/Print/chd3live
+    src: 192.168.255.35:/chd_post
+  - path: /image/ais/Email/chd3live/xmlgw
+    src: 192.168.255.35:/xmlgw
