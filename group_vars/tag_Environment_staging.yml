@@ -38,3 +38,5 @@ nfsmounts:
     src: 192.168.255.19:/chd_image
   - path: /image/ais/Online/chd3test
     src: 192.168.255.19:/chd_online
+  - path: /image/ais/Email/chips/test_image
+    src: 172.16.2.112:/vol/data0/test_image
