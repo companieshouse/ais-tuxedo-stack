@@ -34,6 +34,8 @@ nfsmounts:
   - path: /mnt/nfs/chi-sca-pl2/data1/apps/scripts/system/trig1
     src: 172.24.4.18:/data1/apps/scripts/system/trig1
     opts: ro,hard,bg
+  - path: /image/ais/cache/ImportCaches
+    src: 192.168.255.19:/image1/ImportCaches
   - path: /image/ais/cache/cache_space1
     src: 192.168.255.19:/image1/cache_space1
   - path: /image/ais/cache/cache_space2
