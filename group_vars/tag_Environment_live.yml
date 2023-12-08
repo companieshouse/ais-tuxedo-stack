@@ -123,4 +123,4 @@ nfsmounts:
   - path: /image/ais/Email/chd3live/xmlgw
     src: 192.168.255.35:/xmlgw
   - path: /image/ais/Email/chips/live_image
-    src: 172.16.2.112:/vol/data0/live_image
+    src: 192.168.255.35:/live_image
