@@ -112,9 +112,17 @@ variable "tuxedo_log_groups" {
   description = "A map of lists whose keys represent Tuxedo service groups. Each list object represents a single CloudWatch log group and is expected to specify at least a 'name' attribute. Optional 'log_retention_in_days' and 'kms_key_id' attributes can be used to override the default values ('log_retention_in_days' defaults to the value of the 'default_log_retention_in_days' variable, and 'kms_key_id' defaults to a KMS key identifier value sourced from Hashicorp Vault)."
   default = {
     ais = [
+      { name : "audlog" },
+      { name : "bsslog" },
+      { name : "doc-retrieval" },
       { name : "domain" },
       { name : "domaudit" },
-      { name : "ULOG" }
+      { name : "errlog" },
+      { name : "file-ret-client" },
+      { name : "output-debug-email" },
+      { name : "output-debug-online" },
+      { name : "syslog" },
+      { name : "ulog" }
     ]
   }
 }
