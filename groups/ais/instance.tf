@@ -13,57 +13,65 @@ resource "aws_security_group" "common" {
   name   = "common-${local.common_resource_name}"
   vpc_id = data.aws_vpc.heritage.id
 
-  ingress {
-    description = "Allow SSH connectivity for application deployments"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "TCP"
-    cidr_blocks = var.deployment_cidrs
-  }
-
-  ingress {
-    description = "Allow Informix HDR connectivity for Visual Basic services"
-    from_port   = 6278
-    to_port     = 6278
-    protocol    = "TCP"
-    cidr_blocks = local.visual_basic_app_cidrs
-  }
-
-  dynamic "ingress" {
-    for_each = var.tuxedo_services
-    iterator = service
-    content {
-      description = "Allow OIS Tuxedo connectivity for Tuxedo ${upper(service.key)} services"
-      from_port   = service.value
-      to_port     = service.value
-      protocol    = "TCP"
-      cidr_blocks = data.aws_subnet.application[*].cidr_block
-    }
-  }
-
-  dynamic "ingress" {
-    for_each = var.informix_services
-    iterator = service
-    content {
-      description = "Allow Informix HDR connectivity for Tuxedo ${upper(service.key)} services"
-      from_port   = service.value
-      to_port     = service.value
-      protocol    = "TCP"
-      cidr_blocks = data.aws_subnet.application[*].cidr_block
-    }
-  }
-
-  egress {
-    description = "Allow outbound traffic"
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
   tags = merge(local.common_tags, {
     Name = "common-${local.common_resource_name}"
   })
+}
+
+resource "aws_security_group_rule" "ingress_ci_deployments" {
+  type              = "ingress"
+  description       = "Allow inbound SSH connectivity for CI application deployments"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "TCP"
+  cidr_blocks       = var.deployment_cidrs
+  security_group_id = aws_security_group.common.id
+}
+
+resource "aws_security_group_rule" "ingress_chiris_to_informix" {
+  type              = "ingress"
+  description       = "Allow inbound connectivity from CHIRIS desktop service to AIS Informix databases"
+  from_port         = 6278
+  to_port           = 6278
+  protocol          = "TCP"
+  cidr_blocks       = local.iris_desktop_service_cidrs
+  security_group_id = aws_security_group.common.id
+}
+
+resource "aws_security_group_rule" "ingress_ois_to_ais_services" {
+  for_each = var.tuxedo_services
+
+  type              = "ingress"
+  description       = "Allow inbound connectivity from OIS Tuxedo services to ${upper(each.key)} Tuxedo services"
+  from_port         = each.value
+  to_port           = each.value
+  protocol          = "TCP"
+  cidr_blocks       = data.aws_subnet.application[*].cidr_block
+  security_group_id = aws_security_group.common.id
+}
+
+resource "aws_security_group_rule" "ingress_informix_hdr" {
+  for_each = var.informix_services
+
+  type              = "ingress"
+  description       = "Allow inbound connectivity from ${upper(each.key)} Informix databases to ${upper(each.key)} Informix databases for cross-instance HDR functionality"
+  from_port         = each.value
+  to_port           = each.value
+  protocol          = "TCP"
+  cidr_blocks       = data.aws_subnet.application[*].cidr_block
+  security_group_id = aws_security_group.common.id
+}
+
+resource "aws_security_group_rule" "egress_all" {
+  for_each = var.informix_services
+
+  type              = "egress"
+  description       = "Allow all outbound traffic"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.common.id
 }
 
 resource "aws_instance" "ais" {
