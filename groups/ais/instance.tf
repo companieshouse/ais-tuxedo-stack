@@ -19,22 +19,26 @@ resource "aws_security_group" "common" {
 }
 
 resource "aws_security_group_rule" "ingress_ci_deployments" {
+  for_each = toset(var.deployment_cidrs)
+
   type              = "ingress"
   description       = "Allow inbound SSH connectivity for CI application deployments"
   from_port         = 22
   to_port           = 22
   protocol          = "TCP"
-  cidr_blocks       = var.deployment_cidrs
+  cidr_blocks       = [each.value]
   security_group_id = aws_security_group.common.id
 }
 
 resource "aws_security_group_rule" "ingress_chiris_to_informix" {
+  for_each = toset(local.iris_desktop_service_cidrs)
+
   type              = "ingress"
   description       = "Allow inbound connectivity from CHIRIS desktop service to AIS Informix databases"
   from_port         = 6278
   to_port           = 6278
   protocol          = "TCP"
-  cidr_blocks       = local.iris_desktop_service_cidrs
+  cidr_blocks       = [each.value]
   security_group_id = aws_security_group.common.id
 }
 
