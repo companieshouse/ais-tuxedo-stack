@@ -45,4 +45,13 @@ locals {
     for block_device in data.aws_ami.ais_tuxedo.block_device_mappings :
     block_device if block_device.device_name != data.aws_ami.ais_tuxedo.root_device_name
   ]
+
+  iboss_cidr = "10.40.250.0/24"
+
+  visual_basic_app_cidrs = [
+    data.vault_generic_secret.internal_cidrs.data["cardiff_vpn2"],
+    data.vault_generic_secret.internal_cidrs.data["internal_range"],
+    data.vault_generic_secret.internal_cidrs.data["ipo_vpn"],
+    local.iboss_cidr
+  ]
 }

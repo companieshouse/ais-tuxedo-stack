@@ -21,6 +21,14 @@ resource "aws_security_group" "common" {
     cidr_blocks = var.deployment_cidrs
   }
 
+  ingress {
+    description = "Allow Informix HDR connectivity for Visual Basic services"
+    from_port   = 6278
+    to_port     = 6278
+    protocol    = "TCP"
+    cidr_blocks = local.visual_basic_app_cidrs
+  }
+
   dynamic "ingress" {
     for_each = var.tuxedo_services
     iterator = service
