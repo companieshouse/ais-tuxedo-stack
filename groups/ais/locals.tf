@@ -49,9 +49,9 @@ locals {
   iboss_cidr = "10.40.250.0/24"
 
   visual_basic_app_cidrs = [
-    data.vault_generic_secret.internal_cidrs.data["cardiff_vpn2"],
-    data.vault_generic_secret.internal_cidrs.data["internal_range"],
-    data.vault_generic_secret.internal_cidrs.data["ipo_vpn"],
+    nonsensitive(data.vault_generic_secret.internal_cidrs.data["cardiff_vpn2"]),
+    nonsensitive(data.vault_generic_secret.internal_cidrs.data["internal_range"]),
+    nonsensitive(data.vault_generic_secret.internal_cidrs.data["ipo_vpn"]),
     local.iboss_cidr
   ]
 }
