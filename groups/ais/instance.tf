@@ -31,7 +31,7 @@ resource "aws_security_group_rule" "ingress_ci_deployments" {
 }
 
 resource "aws_security_group_rule" "ingress_chiris_to_informix" {
-  for_each = toset(local.iris_desktop_service_cidrs)
+  for_each = toset(local.chiris_desktop_service_cidrs)
 
   type              = "ingress"
   description       = "Allow inbound connectivity from CHIRIS desktop service to AIS Informix databases"
