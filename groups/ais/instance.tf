@@ -67,8 +67,6 @@ resource "aws_security_group_rule" "ingress_informix_hdr" {
 }
 
 resource "aws_security_group_rule" "egress_all" {
-  for_each = var.informix_services
-
   type              = "egress"
   description       = "Allow all outbound traffic"
   from_port         = 0
