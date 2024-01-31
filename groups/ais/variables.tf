@@ -26,11 +26,6 @@ variable "default_log_retention_in_days" {
   default     = 7
 }
 
-variable "deployment_cidrs" {
-  type        = list(string)
-  description = "A list of strings representing IPv4 CIDR addresses from which applications will be deployed to Tuxedo instances via Ansible."
-}
-
 variable "dns_zone_suffix" {
   type        = string
   description = "The common DNS hosted zone suffix used across accounts."
