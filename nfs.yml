@@ -14,4 +14,4 @@
   remote_user: centos
   become: yes
   roles:
-    - nfs 
+    - nfs-mounts

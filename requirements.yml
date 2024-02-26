@@ -7,6 +7,9 @@ roles:
   - src: https://github.com/companieshouse/ansible-role-ssh-key
     name: ssh-key
     version: "1.0.0"
+  - src: https://github.com/companieshouse/ansible-role-nfs-mounts
+    name: nfs-mounts
+    version: "1.0.0"
 
 collections:
   - name: amazon.aws
