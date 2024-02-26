@@ -16,4 +16,4 @@
   roles:
     - role: iscsi-devices
       vars:
-        vault_path: "/applications/heritage-{{ environment_name }}-eu-west-2/ais-tuxedo/iscsi"
+        iscsi_devices_vault_path: "/applications/heritage-{{ environment_name }}-eu-west-2/ais-tuxedo/iscsi"
