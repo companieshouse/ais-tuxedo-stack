@@ -13,7 +13,7 @@ iscsi_devices:
   - alias: ais
     raw_character_device_path: /dev/raw/raw1
 
-nfsmounts:
+nfs_mounts_config:
   - path: /DBshare
     src: 192.168.255.20:/DBshare
   - path: /mnt/nfs/chi-sca-pl2/data1/image/masterDocs
