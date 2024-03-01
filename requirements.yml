@@ -4,11 +4,14 @@ roles:
   - src: https://github.com/companieshouse/ansible-role-aws-cli
     name: aws-cli
     version: "1.0.0"
-  - src: https://github.com/companieshouse/ansible-role-ssh-key
-    name: ssh-key
+  - src: https://github.com/companieshouse/ansible-role-informix-db
+    name: informix-db
     version: "1.0.0"
   - src: https://github.com/companieshouse/ansible-role-iscsi-devices
     name: iscsi-devices
+    version: "1.0.1"
+  - src: https://github.com/companieshouse/ansible-role-ssh-key
+    name: ssh-key
     version: "1.0.0"
 
 collections:

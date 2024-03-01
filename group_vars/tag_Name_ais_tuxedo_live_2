@@ -10,7 +10,7 @@ informix_server_name_suffix: _secondary
 # Server ID mappings:
 #   - ais 0 (primary/secondary)
 
-informix_service_config:
+informix_db_config:
   ais:
     server_aliases: "image_win"
     server_id: "{{ informix_server_id_start + (0 * informix_server_id_increment) | int }}"
