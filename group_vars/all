@@ -5,4 +5,18 @@ informix_logs_path: /var/log/informix
 informix_service_group: informix
 informix_service_user: informix
 
+iscsi_devices_config:
+  - alias: db_dump
+    filesystem:
+      type: xfs
+      path: /db_dump
+      mode: "770"
+      owner: informix
+      group: informix
+  - alias: ais
+    raw_character_device:
+      path: /dev/raw/raw1
+      owner: informix
+      group: informix
+
 vault_base_path: /applications/heritage-{{ environment_name }}-eu-west-2/ais-tuxedo
