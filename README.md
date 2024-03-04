@@ -13,4 +13,4 @@ This branch (i.e. `deployment`) contains the deployment code responsible for dep
 
 Refer to the documentation for each of the following roles for more information:
 
-* [database](roles/database/README.md) - for provisioning Informix database server(s), dbspaces, chunks
+* [management](roles/management/README.md) - for provisioning Informix database management scripts and supporting tools
