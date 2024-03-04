@@ -1,6 +1,6 @@
 ---
 
-informix_server_name_suffix: _secondary
+informix_db_server_name_suffix: _secondary
 
 # Staging environment
 #
