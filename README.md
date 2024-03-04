@@ -7,10 +7,11 @@ This project encapsulates the infrastructure and deployment code for AIS Tuxedo 
 
 The remainder of this document contains information that is specific to the branch in which it appears.
 
-## Infrastructure
+## Deployment
 
-This branch (i.e. `deployment`) contains the deployment code responsible for deploying AIS Tuxedo services and is composed of multiple Ansible roles which are used primarily in CI to provision Informix database servers and deploy groups of AIS Tuxedo services to a given environment.
+This branch (i.e. `deployment`) contains the deployment code responsible for deploying AIS Tuxedo services and contains several Ansible playbooks which are used in CI/CD pipelines to provision servers in AWS:
 
-Refer to the documentation for each of the following roles for more information:
-
-* [management](roles/management/README.md) - for provisioning Informix database management scripts and supporting tools
+- [database.yml](database.yml) - provision Informix database server(s), dbspaces, and chunks
+- [devices.yml](devices.yml) - discover and configure iSCSI devices
+- [management.yml](management.yml) - deploy Informix cron jobs and management tools
+- [nfs.yml](nfs.yml) - configure and mount persistent NFS shares
