@@ -3,10 +3,10 @@
 # Provision Ansible controller with SSH key for remote
 - hosts: localhost
   roles:
-    - ssh-key
-  vars:
-    ssh_key_name: ansible_remote
-    hashicorp_vault_private_key_path: "/applications/heritage-{{ environment_name }}-eu-west-2/ais-tuxedo/aws"
+    - role: ssh-key
+      vars:
+        ssh_key_name: ansible_remote
+        hashicorp_vault_private_key_path: "{{ vault_base_path }}/aws"
 
 # Provision Informix dbspaces and chunks
 - hosts: aws_ec2
@@ -16,4 +16,4 @@
   roles:
     - role: informix-db
       vars:
-        informix_db_vault_path: "/applications/heritage-{{ environment_name }}-eu-west-2/ais-tuxedo/informix"
+        informix_db_vault_path: "{{ vault_base_path }}/informix"

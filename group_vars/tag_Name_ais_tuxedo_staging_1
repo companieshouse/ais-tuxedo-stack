@@ -64,7 +64,7 @@ informix_db_config:
           host: instance-1.ais.tuxedo.staging.heritage.aws.internal
           service_or_port: 6278
 
-informix_maintenance_jobs:
+informix_management_cron_jobs:
   - name: Stop all logical log continuous backup processes
     day_of_week: "*"
     day_of_month: "*"
