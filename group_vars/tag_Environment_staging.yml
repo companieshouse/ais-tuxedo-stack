@@ -7,7 +7,7 @@ informix_server_port_start: 6000
 
 nfs_mounts_config:
   - path: /DBshare
-    src: 192.168.255.20:/DBshare
+    src: cvonfs.staging.heritage.aws.internal:/DBshare
   - path: /mnt/nfs/chi-sca-pl2/data1/image/masterDocs
     src: 172.24.4.18:/data1/image/masterDocs
     opts: ro,hard,bg
