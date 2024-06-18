@@ -6,7 +6,7 @@ roles:
     version: "1.0.1"
   - src: https://github.com/companieshouse/ansible-role-informix-db
     name: informix-db
-    version: "1.0.3"
+    version: "1.0.4"
   - src: https://github.com/companieshouse/ansible-role-informix-management
     name: informix-management
     version: "1.0.3"
