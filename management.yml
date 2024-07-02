@@ -12,9 +12,9 @@
 - hosts: aws_ec2
   serial: 1
   remote_user: centos
-  become: yes
+  become: true
   roles:
     - role: informix-management
       vars:
-        informix_management_alerts_enabled: yes
+        informix_management_alerts_enabled: true
         informix_management_alerts_vault_path: "{{ vault_base_path }}/alerts"
