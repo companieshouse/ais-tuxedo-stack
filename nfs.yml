@@ -12,6 +12,6 @@
 - hosts: aws_ec2
   serial: 1
   remote_user: centos
-  become: yes
+  become: true
   roles:
     - role: nfs-mounts
