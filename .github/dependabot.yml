@@ -8,6 +8,15 @@ updates:
       - "companieshouse/platform-admin"
     registries:
       - github-dependabot
+    groups:
+      version-updates:
+        applies-to: "version-updates"
+        patterns:
+          - "*"
+      security-updates:
+        applies-to: "security-updates"
+        patterns:
+          - "*"
 registries:
   github-dependabot:
     type: git
