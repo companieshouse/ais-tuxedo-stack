@@ -9,7 +9,7 @@
         ssh_key_vault_path: "{{ vault_base_path }}/aws"
 
 - name: Provision NFS mounts
-  hosts: amazon.aws.aws_ec2
+  hosts: aws_ec2
   serial: 1
   remote_user: centos
   become: true
