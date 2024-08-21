@@ -16,6 +16,5 @@
   roles:
     - role: informix-db
       vars:
-        informix_db_logs_path: "{{ informix_logs_path }}"
         informix_db_server_name_suffix: "{{ informix_server_name_suffix }}"
         informix_db_vault_path: "{{ vault_base_path }}/informix"
